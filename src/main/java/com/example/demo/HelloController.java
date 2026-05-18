@@ -22,14 +22,15 @@ public class HelloController {
         return "hello";
     }
 
+    @ResponseBody
     @GetMapping("/introduce")
-    public String introduce(){ return "안녕하세요 제 이름은 김남홍입니다!";}
-
-    @GetMapping("/introduce")
-    public String introducename(@RequestParam String name){
+    public String introduce(@RequestParam(required = false) String name) {
+        if (name == null) {
+            return "안녕하세요 제 이름은 김남홍입니다!";
+        }
         return "안녕하세요 제 이름은 " + name + "입니다!";
     }
-
+    @ResponseBody
     @GetMapping("/json")
     public Map<String, Object> json() {
         Map<String, Object> result = new HashMap<>();
