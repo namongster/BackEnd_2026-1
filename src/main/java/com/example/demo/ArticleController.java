@@ -34,16 +34,19 @@ public class ArticleController {
     // PUT /article/{id} : 특정 article 수정
     @PutMapping("/article/{id}")
     public Article updateArticle(@PathVariable int id, @RequestBody Article article) {
+        if (!articles.containsKey(id)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
         article.setId(id);
         articles.put(id, article);
         return article;
+
     }
 
     // DELETE /article/{id} : 특정 article 삭제
     @DeleteMapping("/article/{id}")
     public Map<String, String> deleteArticle(@PathVariable int id) {
         articles.remove(id);
-        nextId--;
         Map<String, String> result = new HashMap<>();
         result.put("message", "삭제 완료");
         return result;
