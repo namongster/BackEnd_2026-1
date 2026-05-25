@@ -1,17 +1,16 @@
 package com.example.demo;
 
-import ch.qos.logback.core.model.Model;
+import org.springframework.ui.Model;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 
 @RestController
 public class ArticleController {
-    private Map<Integer, Article> articles = new HashMap<>();
+    protected static Map<Integer, Article> articles = new HashMap<>();
     private int nextId = 1;
 
     // GET /article/{id} : 특정 article 조회
@@ -25,12 +24,6 @@ public class ArticleController {
         else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
     }
-    @GetMapping("/posts")
-    public String posts(Model model) {
-        model.addText("articles");
-        return "posts";
-    }
-
     @GetMapping("/articles")
     public Collection<Article> getALLarticles(){
         return articles.values();
