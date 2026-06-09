@@ -47,7 +47,7 @@ public class Article {
         this.title = title;
     }
 
-    public String getAuthor(String author){
+    public String getAuthor(){
         return author;
     }
 
@@ -55,7 +55,7 @@ public class Article {
         this.author = author;
     }
 
-    public LocalDate getCreatedAt(LocalDate createdAt){
+    public LocalDate getCreatedAt(){
         return createdAt;
     }
 

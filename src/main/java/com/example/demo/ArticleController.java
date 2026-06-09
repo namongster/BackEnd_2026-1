@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -8,54 +9,54 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDate;
 import java.util.*;
 
-@RestController
-public class ArticleController {
-    protected static Map<Integer, Article> articles = new HashMap<>();
-    private int nextId = 1;
+@Controller
+public class ArticleController{
+    private final ArticleService articleService;
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
 
     // GET /article/{id} : 특정 article 조회
+    @ResponseBody
     @GetMapping("/article/{id}")
     public Article getArticle(@PathVariable int id){
-        Article article = articles.get(id);
-
-        if (article != null){
-            return article;
-        }
-        else throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-
+        return articleService.getArticle(id);
     }
+    // GET /articles : 모든 article 조회
+    @ResponseBody
     @GetMapping("/articles")
     public Collection<Article> getALLarticles(){
-        return articles.values();
+        return articleService.getALLarticles();
     }
 
+    @GetMapping("/posts")
+    public String posts(Model model) {
+
+        model.addAttribute("boardName","자유게시판");
+        model.addAttribute("articles",articleService.getALLarticles());
+
+
+        return "posts";
+    }
     // POST /article : 신규 article 생성
+    @ResponseBody
     @PostMapping("/article")
     public Article creatArticle(@RequestBody Article article){
-        article.setId(nextId++);
-        articles.put((int) article.getId(), article);
-        return article;
+        return articleService.creatArticle(article);
     }
 
     // PUT /article/{id} : 특정 article 수정
+    @ResponseBody
     @PutMapping("/article/{id}")
     public Article updateArticle(@PathVariable int id, @RequestBody Article article) {
-        if (!articles.containsKey(id)){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        article.setId(id);
-        articles.put(id, article);
-        return article;
-
+        return articleService.updateArticle(id, article);
     }
 
     // DELETE /article/{id} : 특정 article 삭제
+    @ResponseBody
     @DeleteMapping("/article/{id}")
     public Map<String, String> deleteArticle(@PathVariable int id) {
-        articles.remove(id);
-        Map<String, String> result = new HashMap<>();
-        result.put("message", "삭제 완료");
-        return result;
+        return articleService.deleteArticle(id);
     }
 
 }
