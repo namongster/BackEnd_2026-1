@@ -31,9 +31,9 @@ public class HelloController {
     @GetMapping("/introduce")
     public String introduce(@RequestParam(required = false) String name) {
         if (name == null) {
-            return "Hello, my name is Sanghoon Kim.";
+            return "안녕하세요 제 이름은 김남홍 입니다.";
         }
-        return "Hello, my name is " + name + ".";
+        return "안녕하세요 제 이름은 " + name + "입니다.";
     }
 
     @ResponseBody
@@ -41,7 +41,7 @@ public class HelloController {
     public Map<String, Object> json() {
         Map<String, Object> result = new HashMap<>();
         result.put("age", 26);
-        result.put("name", "Hong Gil-dong");
+        result.put("name", "허준기");
         return result;
     }
 }
