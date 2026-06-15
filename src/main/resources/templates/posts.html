@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <title>게시판</title>
@@ -13,7 +13,6 @@
                 제목
             </h3>
 
-
             <p>
                 <span th:text="${article.author}">
                     작성자
@@ -22,11 +21,10 @@
                 <span th:text="${#temporals.format(article.createdAt, '| yyyy-MM-dd')}">
                     작성일
                 </span>
-
             </p>
 
             <p th:text="${article.description}">
-            내용
+                내용
             </p>
             <hr>
         </div>
